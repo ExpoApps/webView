@@ -1,8 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Linking, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { TextInput } from "react-native";
 import { WebView } from 'react-native-webview';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const [list, setList] = React.useState(['https://demo.carebuilder.se']);
@@ -24,8 +25,33 @@ export default function App() {
 
   const remove = (item) => {
     setList(list.filter(link => link !== item));
-    console.log(item);
   }
+
+  const storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify(list)
+      await AsyncStorage.setItem('@carebuilder-linklist', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@carebuilder-linklist')
+      jsonValue != null ? setList(JSON.parse(jsonValue)) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+  React.useEffect(()=>{
+    getData()
+  }, [])
+
+  React.useEffect(()=>{
+    storeData()
+  }, [list])
 
   if(dest) {
     return (
