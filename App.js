@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { TextInput } from "react-native";
 import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Inject from './src/inject'
 
 export default function App() {
   const [list, setList] = React.useState(['https://demo.carebuilder.se']);
@@ -58,6 +59,8 @@ export default function App() {
       <WebView source={{ uri: dest }} />
     )
   }
+
+  return <Inject />
 
   return (
     <View style={styles.container}>
