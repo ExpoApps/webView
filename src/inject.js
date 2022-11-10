@@ -20,9 +20,11 @@ export default function Inject() {
     </body>
   `;
 
+  const postCustomer = () => viewRef.current.injectJavaScript('window.ReactNativeWebView.postMessage(customerType)');
+
   const toggleCustomer = () => {
     viewRef.current.injectJavaScript('toggle()');
-    viewRef.current.injectJavaScript('window.ReactNativeWebView.postMessage(customerType)');
+    postCustomer();
   }
 
   return (
@@ -38,6 +40,7 @@ export default function Inject() {
         source={{ html: customHTML }} 
         onMessage={ event => setCustomer(event.nativeEvent.data) }
         javaScriptEnabledAndroid={ true }
+        onLoadEnd={ postCustomer }
       />
     </SafeAreaView>
   );
