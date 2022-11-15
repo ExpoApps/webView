@@ -1,0 +1,12 @@
+<body>
+  <h1>WebView</h1>
+  <h2>customerType: <span id="h1_element"></span></h2>
+  <script>
+    let customerType = "Public"
+    function toggle(){
+      customerType = (customerType === "Public") ? "Private" : "Public"
+      document.getElementById("h1_element").innerText = customerType;
+    }
+    toggle()
+  </script>
+</body>

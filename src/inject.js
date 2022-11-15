@@ -27,6 +27,14 @@ export default function Inject() {
     postCustomer();
   }
 
+  /*function injectFunction(){
+    return viewRef.current.injectJavaScript(
+      `customerType = (customerType === "Public") ? "Private" : "Public"
+      document.getElementById("h1_element").innerText = customerType;
+      window.ReactNativeWebView.postMessage(customerType)`
+    )
+  }*/
+
   return (
     <SafeAreaView style={{ flex: 1, top: 50 }}>
       <Text>WebView data: {customer}</Text>
@@ -37,8 +45,11 @@ export default function Inject() {
       <WebView 
         ref={viewRef}
         style={{ backgroundColor: 'lightgray' }}
-        source={{ html: customHTML }} 
-        onMessage={ event => setCustomer(event.nativeEvent.data) }
+        source={{ uri: 'http://127.0.0.1:5500/src/inject.html' }} 
+        onMessage={ event => {
+          console.log("RECEIVED MESSAGE FROM WEBVIEW: " + event.nativeEvent.data);
+          setCustomer(event.nativeEvent.data)
+        }}
         javaScriptEnabledAndroid={ true }
         onLoadEnd={ postCustomer }
       />

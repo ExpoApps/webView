@@ -5,6 +5,7 @@ import { TextInput } from "react-native";
 import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Inject from './src/inject'
+import Picsmart from './src/picsmart'
 
 export default function App() {
   const [list, setList] = React.useState(['https://demo.carebuilder.se']);
